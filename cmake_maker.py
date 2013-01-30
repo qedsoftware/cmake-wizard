@@ -43,8 +43,8 @@ def main(argv):
 		project_name = raw_input("Enter project directory name: ")
 		main_program_name = raw_input("Enter name of main program (ex: main.c): ")
 		executable_name = raw_input("Enter name of executable (ex: demo): ")
-		standard_libraries = raw_input("List standard third-party libraries (ex: m, blas, crypto): ").split()
-		special_libraries = raw_input("List special third-party libraries to be found (ex: GSL, LAPACK, OPENCV): ").split()
+		standard_libraries = raw_input("List standard third-party libraries, delimited by spaces (ex: m blas crypto): ").split()
+		special_libraries = raw_input("List special third-party libraries to be found, delimited by spaces (ex: GSL LAPACK OPENCV): ").split()
 		custom_libraries = raw_input("List custom-written libraries in source directory: ").split()	
 		file_extension = raw_input("Print file extensions ('c' or 'cpp'): ")
 	
@@ -54,6 +54,45 @@ def main(argv):
 	
 	# current time
 	now = datetime.datetime.now()
+	
+	# write readme
+	readme_content = """
+	Procedure for building code using CMake:
+
+  [%s]$ mkdir build
+  [%s]$ cd build
+  [%s/build]$ cmake ..
+  [%s/build]$ make
+
+  Note that the last two commands are executed inside the build directory.
+
+  Afterwards, your tree structure should look like this:
+
+  [%s]$ tree -L 2
+  .
+  |-- CMakeLists.txt
+  |-- README.txt
+  |-- build
+  |   |-- CMakeCache.txt
+  |   |-- CMakeFiles
+  |   |-- Makefile
+  |   |-- cmake_install.cmake
+  |   |-- src
+  |-- src
+      |-- CMakeLists.txt
+      |-- %s.cpp
+
+  and you can execute the program in the build/src directory as follows:
+
+  [masked_xcorr/build/src]$ ./%s
+
+  For more information on using CMake, check out http://www.cmake.org/cmake/help/cmake_tutorial.html
+
+  - William Wu, %s
+	""" % (project_name,project_name,project_name,project_name,project_name,main_program_name,executable_name,now.strftime(time_fmt))
+	readme = open("%s/README.txt" % project_name,"w")
+	readme.write(readme_content)
+	readme.close()	
 	
 	# a = content of top-level makefile
 	a = "# %s, %s\n" % (author, now.strftime(time_fmt))
