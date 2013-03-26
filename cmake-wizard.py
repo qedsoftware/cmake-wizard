@@ -58,40 +58,44 @@ def main(argv):
 	
 	# write readme
 	readme_content = """
-	Procedure for building code using CMake:
+Procedure for building code using CMake
+========================================
 
-  [%s]$ mkdir build
-  [%s]$ cd build
-  [%s/build]$ cmake ..
-  [%s/build]$ make
+[%s]$ mkdir build
+[%s]$ cd build
+[%s/build]$ cmake ..
+[%s/build]$ make
 
-  Note that the last two commands are executed inside the build directory.
+Note that the last two commands are executed inside the build directory.
 
-  Afterwards, your tree structure should look like this:
+Afterwards, your tree structure should look like this:
 
-  [%s]$ tree -L 2
-  .
-  |-- CMakeLists.txt
-  |-- README.txt
-  |-- build
-  |   |-- CMakeCache.txt
-  |   |-- CMakeFiles
-  |   |-- Makefile
-  |   |-- cmake_install.cmake
-  |   |-- src
-  |-- src
-      |-- CMakeLists.txt
-      |-- %s
+	[%s]$ tree -L 2
 
-  and you can execute the program in the build/src directory as follows:
+	.
+	|-- CMakeLists.txt
+	|-- README.md
+	|-- build
+	|   |-- CMakeCache.txt
+	|   |-- CMakeFiles
+	|   |-- Makefile
+	|   |-- cmake_install.cmake
+	|   |-- src
+	|-- src
+	  |-- CMakeLists.txt
+	  |-- %s
 
-  [masked_xcorr/build/src]$ ./%s
+and you can execute the program in the build/src directory as follows:
 
-  For more information on using CMake, check out http://www.cmake.org/cmake/help/cmake_tutorial.html
+	[masked_xcorr/build/src]$ ./%s
 
-  - William Wu, %s
+For more information on using CMake, check out 
+
+	http://www.cmake.org/cmake/help/cmake_tutorial.html
+
+William Wu, %s
 	""" % (project_name,project_name,project_name,project_name,project_name,main_program_name,executable_name,now.strftime(time_fmt))
-	readme = open("%s/README.txt" % project_name,"w")
+	readme = open("%s/README.md" % project_name,"w")
 	readme.write(readme_content)
 	readme.close()	
 	
