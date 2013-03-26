@@ -3,7 +3,7 @@
 import os, sys, datetime, getopt
 
 # parameters
-author = "William Wu"
+author_name = "William Wu"
 time_fmt = "%Y-%m-%d %H:%M"
 
 # usage
@@ -40,6 +40,7 @@ def main(argv):
 				
 	# gather parameters from user
 	if prompts_flag: 
+		author_name = raw_input("Enter author name: ")
 		project_name = raw_input("Enter project directory name: ")
 		main_program_name = raw_input("Enter name of main program (ex: main.c): ")
 		executable_name = raw_input("Enter name of executable (ex: demo): ")
@@ -95,7 +96,7 @@ def main(argv):
 	readme.close()	
 	
 	# a = content of top-level makefile
-	a = "# %s, %s\n" % (author, now.strftime(time_fmt))
+	a = "# %s, %s\n" % (author_name, now.strftime(time_fmt))
 	a += "cmake_minimum_required(VERSION 2.8)\n"
 	a += "project( %s )\n" % project_name
 	for lib in special_libraries:
@@ -108,7 +109,7 @@ def main(argv):
 	cmakefile_a.close()
 
 	# b = content of src-level makefile
-	b = "# %s, %s\n" % (author, now.strftime(time_fmt))
+	b = "# %s, %s\n" % (author_name, now.strftime(time_fmt))
 	b += "include_directories (${%s_SOURCE_DIR}/src)\n" % project_name
 	b += "link_directories (${%s_BINARY_DIR}/src)\n" % project_name
 	if len(custom_libraries) > 0:
