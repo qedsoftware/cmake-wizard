@@ -80,7 +80,7 @@ def main(argv):
   |   |-- src
   |-- src
       |-- CMakeLists.txt
-      |-- %s.cpp
+      |-- %s
 
   and you can execute the program in the build/src directory as follows:
 
