@@ -24,6 +24,7 @@ $ python cmake-wizard.py
 	Print file extensions ('c' or 'cpp'): cpp
 
 $ tree cmake-wizard-demo/
+
 	cmake-wizard-demo/
 	├── CMakeLists.txt
 	├── README.txt
