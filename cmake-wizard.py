@@ -58,13 +58,20 @@ def main(argv):
 	
 	# write readme
 	readme_content = """
+Description
+========================================
+
+
 Procedure for building code using CMake
 ========================================
 
-[%s]$ mkdir build
-[%s]$ cd build
-[%s/build]$ cmake ..
-[%s/build]$ make
+	[%s]$ mkdir build
+
+	[%s]$ cd build
+
+	[%s/build]$ cmake ..
+
+	[%s/build]$ make
 
 Note that the last two commands are executed inside the build directory.
 
