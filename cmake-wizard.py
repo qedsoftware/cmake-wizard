@@ -21,7 +21,7 @@ def main(argv):
 	main_program_name = "main.cpp"
 	executable_name = "demo"
 	standard_libraries = [ "m" ]
-	special_libraries = [ "OPENCV" ]
+	special_libraries = [ "OpenCV" ]
 	custom_libraries = [ ]
 	file_extension = "cpp"
 		
@@ -45,7 +45,7 @@ def main(argv):
 		main_program_name = raw_input("Enter name of main program (ex: main.c): ")
 		executable_name = raw_input("Enter name of executable (ex: demo): ")
 		standard_libraries = raw_input("List standard third-party libraries, delimited by spaces (ex: m blas crypto): ").split()
-		special_libraries = raw_input("List special third-party libraries to be found, delimited by spaces (ex: GSL LAPACK OPENCV): ").split()
+		special_libraries = raw_input("List special third-party libraries to be found, delimited by spaces (ex: GSL LAPACK OpenCV): ").split()
 		custom_libraries = raw_input("List custom-written libraries in source directory: ").split()	
 		file_extension = raw_input("Print file extensions ('c' or 'cpp'): ")
 	
@@ -64,6 +64,13 @@ Description
 
 Procedure for building code using CMake
 ========================================
+You can either create an in-source build, or an out-of-source build. 
+
+An out-of-source build keeps clean separation between source and build, but requires more overhead to switch between source and build directories if necesary.
+
+An in-source build is perhaps more intuitive, but has the disadvantage of polluting your source directories with auto-generated files.
+
+To create an out-of-source build:
 
 	[%s]$ mkdir build
 
@@ -92,16 +99,24 @@ Afterwards, your tree structure should look like this:
 	  |-- CMakeLists.txt
 	  |-- %s
 
-and you can execute the program in the build/src directory as follows:
+and you can execute the program in the %s/build/src directory as follows:
 
-	[masked_xcorr/build/src]$ ./%s
+	[%s/build/src]$ ./%s
+
+To create an in-source build,
+
+	[%s]$ cmake .
+
+	[%s]$ make
+
+This will create the executables in the %s/src directory.
 
 For more information on using CMake, check out 
 
 	http://www.cmake.org/cmake/help/cmake_tutorial.html
 
-William Wu, %s
-	""" % (project_name,project_name,project_name,project_name,project_name,main_program_name,executable_name,now.strftime(time_fmt))
+%s, %s
+	""" % (project_name,project_name,project_name,project_name,project_name,project_name,main_program_name,project_name,executable_name,project_name,project_name,project_name,author_name,now.strftime(time_fmt))
 	readme = open("%s/README.md" % project_name,"w")
 	readme.write(readme_content)
 	readme.close()	
@@ -128,7 +143,7 @@ William Wu, %s
 		b += "foreach (lib ${LIBS})\n"
 		b += "\tadd_library (${lib} ${lib}.%s)\n" % file_extension
 		b += "endforeach (lib)\n"
-	corelibs_string = " ".join(standard_libraries) + " " + " ".join(map(lambda x: "${" + x + "_LIBRARIES}", special_libraries))
+	corelibs_string = " ".join(standard_libraries + map(lambda x: "${" + x + "_LIBRARIES}", special_libraries))
 	b += "set (CORELIBS %s)\n" % corelibs_string
 	b += "add_executable (%s %s)\n" % (executable_name,main_program_name)
 	if len(custom_libraries) > 0:
